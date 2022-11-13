@@ -18,7 +18,7 @@ router.put("/:id", JwtAndAuthMiddleware, async (req, res) => {
 
 // Find the Users only by admin
 
-router.get("find/:id", JwtAndAdminMiddleware, async (req, res) => {
+router.get("/find/:id", JwtAndAdminMiddleware, async (req, res) => {
 
     try {
         const user = await User.findById(req.params.id)
@@ -26,21 +26,29 @@ router.get("find/:id", JwtAndAdminMiddleware, async (req, res) => {
         res.status(200).json(user)
     } catch (err) {
         res.status(500).json(err)
-    }
+    } 
 
 })
 
 // Find All Users
 
-router.get("/", JwtAndAuthMiddleware, async (req, res) => {
+router.get("/", JwtAndAdminMiddleware, async (req, res) => {
+
+    const query= req.query.new
 
     try {
-        const users = await User.find()
+        const users = query ? await User.find().sort({_id:-1}).limit(1) : await User.find()
 
         res.status(200).json(users)
     } catch (err) {
         res.status(500).json(err)
     }
+
+})
+// Get user stats 
+
+router.get("/",JwtAndAdminMiddleware,  (req, res)=>{
+
 
 })
 

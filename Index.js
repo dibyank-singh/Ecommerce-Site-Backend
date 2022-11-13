@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv"
 import userRoute from "./routes/user.js"
 import authRoute from "./routes/auth.js"
+import productRoute from "./routes/product.js"
 dotenv.config()
 
 const app=express() 
@@ -22,6 +23,7 @@ mongoose.connect(process.env.MongoURL).then(()=>
 // Route Part 
 app.use("/api/users", userRoute)
 app.use("/api/auth", authRoute)
+app.use("/api/products", productRoute)
 
 
 app.listen(5000,()=>{ 

@@ -10,8 +10,8 @@ export const jwtmiddle = (req, res, next) => {
        const token=AuthHeader.split("  ")[1]
         jwt.verify(token, process.env.JWT_SEC, (err, user) => {
             if (err) res.status(403).json("Token is not validate");
-            // user = req.user;
             req.user=user;
+            // console.log(req.user)
             next()
         })
 
@@ -37,11 +37,13 @@ export const jwtmiddle = (req, res, next) => {
  export const JwtAndAdminMiddleware=(req, res, next) =>{
 
     jwtmiddle(req, res, () =>{
-        if(res.user.isAdmin){
+        if( req.user.isAdmin){
+            // console.log(req.user)
             next()
 
         }else {
-            return res.status(403).json("You are not authorized to do that")
+            return res.status(403).json("You are not authorized to do that here")
+            
         }
 
     })
