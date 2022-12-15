@@ -1,9 +1,7 @@
 import express from "express"
-import product from "../models/product.js"
 const router = express.Router()
 import Product from "../models/product.js"
 import { jwtmiddle, JwtAndAuthMiddleware, JwtAndAdminMiddleware } from "./Jwtmiddleware.js"
-
 
 // Create products only be Admin
 
@@ -34,9 +32,9 @@ router.put("/:id", JwtAndAdminMiddleware, async (req, res) => {
 
 })
 
-// // Find the Products by All
+// // Find the Products by Id
 
-router.get("/find/:id",  async (req, res) => {
+router.get("/find/:id", JwtAndAuthMiddleware, async (req, res) => {
 
     try {
         const findProducts = await Product.findById(req.params.id)
@@ -48,9 +46,9 @@ router.get("/find/:id",  async (req, res) => {
 
 })
 
-// Find All Users
+// Find All Products
 
-router.get("/",  async (req, res) => {
+router.get("/", JwtAndAuthMiddleware,  async (req, res) => {
 
     const newq= req.query.new
     const newcategories= req.query.category
@@ -89,6 +87,7 @@ router.get("/",  async (req, res) => {
 
 // // Delete
 
+//  Delete Product by Admin only..
 router.delete("/:id", JwtAndAdminMiddleware, async (req, res) => {
 
     try {
