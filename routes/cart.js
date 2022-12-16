@@ -22,7 +22,7 @@ try{
 router.put("/:id", JwtAndAuthMiddleware, async (req, res) => {
 
     try {
-        const updatedCart = await User.findByIdAndUpdate(req.params.id, {
+        const updatedCart = await Cart.findByIdAndUpdate(req.params.id, {
             $set: req.body
         }, { new: true })
         res.status(200).json(updatedCart)
